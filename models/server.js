@@ -1,15 +1,19 @@
 import express from "express";
 import cors from 'cors';
-import  router  from '../routes/usuarios.js';
+import router from '../routes/usuarios.js';
+import { dbConnection } from "../database/config.js";
+import { connect } from 'mongoose'
 
 class Server {
     constructor() {
 
         this.app = express();
-        this.port = process.env.PORT||3000;
+        this.port = process.env.PORT || 3000;
         this.usuariosPath = '/api/usuarios';
 
-
+        //Conectar a base de datos
+        this.conectarDB();
+        
         //Middlewares
         this.middleware();
 
@@ -17,11 +21,16 @@ class Server {
         this.routes();
     }
 
+    //TODO, conexiones a base de datos
+    async conectarDB() {
+        await dbConnection();
+    }
+
 
     middleware() {
         //CORS
         this.app.use(cors());
-        
+
         //Lectura y parseo del body
         this.app.use(express.json());
 
