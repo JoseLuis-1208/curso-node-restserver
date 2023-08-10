@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
 import Role from "../models/role.js";
 import Usuario from "../models/usuario.js"
+
 const esRoleValido = async (rol = '') => {
     const existeRol = await Role.findOne({ rol });
     if (!existeRol) {
