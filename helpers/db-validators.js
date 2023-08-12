@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
-import Role from "../models/role.js";
+import Role from "../models/rol.js";
 import Usuario from "../models/usuario.js"
 
-const esRoleValido = async (rol = '') => {
+const esRolValido = async (rol = '') => {
     const existeRol = await Role.findOne({ rol });
     if (!existeRol) {
         throw new Error(`El rol ${rol} no esta registrado en la BD`)
     }
 };
+
 const emailExiste = async (correo = '') => {
     //verificar si el correo existe
     const existeEmail = await Usuario.findOne({ correo });
@@ -27,7 +28,7 @@ const existeUsuarioPorId = async (id) => {
 
 
 export {
-    esRoleValido,
+    esRolValido,
     emailExiste,
     existeUsuarioPorId
 }
