@@ -43,62 +43,62 @@ const buscarUsuario = async (termino = '', res = response) => {
 }
 
 const buscarcategoria = async (termino = '', res = response) => {
-if (Types.ObjectId.isValid(termino)) {
-    const categoria = await Categoria.findById(termino);
-    return res.json({
-        result: (categoria) ? [categoria]:[]
-    });
-}
+    if (Types.ObjectId.isValid(termino)) {
+        const categoria = await Categoria.findById(termino);
+        return res.json({
+            result: (categoria) ? [categoria] : []
+        });
+    }
     const regex = new RegExp(termino, 'i');
 
     const categoria = await Categoria.find({
-        $or: [{nombre : regex}],
-        $and: [{estado : true}]
+        $or: [{ nombre: regex }],
+        $and: [{ estado: true }]
     });
     res.json({
-        result:categoria
+        result: categoria
     })
-    
+
 }
 
 const buscarProductos = async (termino = '', res = response) => {
     if (Types.ObjectId.isValid(termino)) {
         const producto = await Producto.findById(termino);
         return res.json({
-            result: (producto) ? [producto]:[]
+            result: (producto) ? [producto] : []
         });
     }
-        const regex = new RegExp(termino, 'i');
-    
-        const producto = await Producto.find({
-            $or: [{nombre : regex},{precio: regex}],
-            $and: [{estado : true}]
+    const regex = new RegExp(termino, 'i');
+
+    const producto = await Producto.find({
+        $or: [{ nombre: regex }, { precio: regex }],
+        $and: [{ estado: true }]
+    });
+
+    res.json({
+        result: producto,
+    })
+
+}
+const buscarRoles = async (termino = '', res = response) => {
+
+    if (Types.ObjectId.isValid(termino)) {
+        const rol = await Role.findById(termino);
+        return res.json({
+            result: (rol) ? [rol] : []
         });
-        
-        res.json({
-            result:producto,
-        })
-        
     }
-    const buscarRoles = async (termino = '', res = response) => {
-       
-        if (Types.ObjectId.isValid(termino)) {
-            const rol = await Role.findById(termino);
-            return res.json({
-                result: (rol) ? [rol]:[]
-            });
-        }
-            const regex = new RegExp(termino, 'i');
-        
-            const rol = await Role.find({
-                $or: [{rol : regex}],
-            });
-            
-            res.json({
-                result:rol,
-            })
-            
-        }
+    const regex = new RegExp(termino, 'i');
+
+    const rol = await Role.find({
+        $or: [{ rol: regex }],
+    });
+
+    res.json({
+        result: rol,
+    })
+
+}
 
 
 
@@ -129,7 +129,7 @@ const buscar = (req, res = response) => {
             break;
         case 'roles':
             // Aquí puedes agregar la lógica para buscar roles
-            buscarRoles(termino,res)
+            buscarRoles(termino, res)
             break;
         default:
             // Lógica por defecto si no coincide ninguna colección

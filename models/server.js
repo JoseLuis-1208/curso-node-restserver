@@ -1,6 +1,6 @@
 import express from "express";
+import fileUpload from "express-fileupload";
 import cors from 'cors';
-import { connect } from 'mongoose'
 
 import { dbConnection } from "../database/config.js";
 
@@ -9,6 +9,7 @@ import router from '../routes/usuarios.js';
 import routerCat from "../routes/categorias.js";
 import routerProducto from "../routes/productos.js";
 import routerbuscar from "../routes/buscar.js";
+import routerUploads from "../routes/uploads.js";
 
 class Server {
     constructor() {
@@ -21,7 +22,8 @@ class Server {
             buscar:'/api/buscar',
             categorias: '/api/categorias',
             productos:'/api/productos',
-            usuarios: '/api/usuarios'
+            usuarios: '/api/usuarios',
+            uploads: '/api/uploads',
         }
         // this.usuariosPath = '/api/usuarios';
         // this.authPath = '/api/auth';
@@ -53,6 +55,13 @@ class Server {
 
         //Direcctorio publico
         this.app.use(express.static('public'));
+
+        //Fileuload - Cargar Archivos.
+       this.app.use(fileUpload({
+        useTempFiles:true,
+        tempFileDir: '/tmp/',
+        createParentPath:true
+       }));
     }
 
     routes() {
@@ -62,6 +71,7 @@ class Server {
         this.app.use(this.paths.usuarios, router);
         this.app.use(this.paths.categorias, routerCat);
         this.app.use(this.paths.productos, routerProducto);
+        this.app.use(this.paths.uploads, routerUploads);
 
 
 

@@ -6,10 +6,10 @@ export const dbConnection = async () => {
         await mongoose.connect(process.env.MONGODB_CNN);
 
         console.log('Base de datos online');
-
     } catch (error) {
         throw new Error('Error a la hora de iniciar la base de datos');
     }
+
 }
 
 
