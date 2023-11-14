@@ -45,3 +45,12 @@ routerCat.delete('/:id', [
 ], borrarCategoria);
 
 export default routerCat
+
+routerCat.delete('/:id', [
+    validarJWT,
+    esAdminRole,
+    tieneRole('ADMIN_ROLE'),
+    check('id', 'No es un id de Mongo valido').isMongoId(),
+    check('id').custom(existeCategoriaPorId),
+    validarCampos,
+], borrarCategoria);
